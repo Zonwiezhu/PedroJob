@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 export default function AltHomePage() {
-  const artImages = Array.from({ length: 12 }, (_, i) => `/Pedro${i + 1}.png`);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [typingComplete, setTypingComplete] = useState(false);
 
@@ -13,13 +12,13 @@ export default function AltHomePage() {
     setMousePosition({ x: e.clientX, y: e.clientY });
   };
 
-  const textToType = "This is a sacred space where we celebrate our $PEDRO artists, meme creators, and NFT visionaries. A permanent digital gallery showcasing their work for all time. Together we'll light the creative spark and elevate each other's art to new heights.";
+  const textToType = "This is a professional space where talent meets opportunity. We connect skilled individuals with innovative companies in the Injective ecosystem. Our platform is designed to elevate your career to new heights through meaningful connections.";
 
   return (
     <>
       <Head>
-        <title>PEDRO×ART</title>
-        <meta name="description" content="Explore Pedro's art in pure black and white" />
+        <title>PEDRO×JOB</title>
+        <meta name="description" content="Career opportunities in the Injective ecosystem" />
       </Head>
 
       <div 
@@ -58,7 +57,7 @@ export default function AltHomePage() {
               className="text-5xl md:text-8xl font-bold mb-6 tracking-tighter font-mono"
               whileHover={{ scale: 1.02 }}
             >
-              PEDRO x <span className="text-white font-mono bg-clip-text bg-gradient-to-r">ART</span>
+              PEDRO × <span className="text-white font-mono bg-clip-text bg-gradient-to-r">JOB</span>
             </motion.h1>
             <motion.p 
               className="text-xl md:text-2xl opacity-80 mb-8"
@@ -66,7 +65,7 @@ export default function AltHomePage() {
               animate={{ opacity: 0.8 }}
               transition={{ delay: 0.3, duration: 0.8 }}
             >
-              Art is freedom
+              Connecting talent with opportunity
             </motion.p>
             <motion.div
               initial={{ opacity: 0 }}
@@ -82,22 +81,20 @@ export default function AltHomePage() {
               className="flex justify-center mt-8"
             >
               <motion.a
-                href="https://drive.google.com/drive/folders/1Zq7sQ0iAAvxNz-3woP8amSMNj1b-TJZE"
+                href="#submit-cv"
                 className="inline-block"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 <button className="px-8 py-3 border-2 border-gray-400 bg-transparent text-gray-300 text-lg font-mono hover:bg-white hover:text-black hover:border-white transition-all duration-300">
-                  MEDIA KIT
+                  SUBMIT YOUR CV
                 </button>
               </motion.a>
             </motion.div>
           </motion.div>
         </section>
 
-        <section className="relative py-64 px-6 max-w-4xl mx-auto z-10">
+        <section className="relative pt-64 pb-10 px-6 max-w-4xl mx-auto z-10">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -106,7 +103,7 @@ export default function AltHomePage() {
             className="mb-64"
           >
             <h2 className="text-3xl md:text-5xl text-center font-bold tracking-tighter mb-12">
-              <span className="text-white bg-clip-text bg-gradient-to-r">CREATOR SANCTUARY</span>
+              <span className="text-white bg-clip-text bg-gradient-to-r">TALENT NETWORK</span>
             </h2>
             
             <motion.div 
@@ -131,62 +128,18 @@ export default function AltHomePage() {
                 >
                   <div className="h-px w-48 mx-auto bg-gradient-to-r from-transparent via-gray-500 to-transparent my-8" />
                   <p className="text-lg italic opacity-70">
-                    Eternal recognition for creators
+                    Powered by TEAM PEDRO
                   </p>
                 </motion.div>
               )}
             </motion.div>
           </motion.div>
         </section>
-
-        <section className="relative py-24 px-6 max-w-7xl mx-auto z-10">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="mb-16"
-          >
-            <h2 className="text-4xl md:text-6xl text-center font-bold tracking-tighter">
-              NFT <span className="text-white bg-clip-text bg-gradient-to-r">GALLERY</span>
-            </h2>
-            <div className="h-px w-24 mx-auto bg-gradient-to-r from-transparent via-gray-500 to-transparent mt-6" />
-          </motion.div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            {artImages.map((src, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{ scale: 1.03, zIndex: 10 }}
-                transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-                className="group relative overflow-hidden rounded-none" 
-              >
-                <div className="absolute inset-0 border border-gray-600 opacity-40 group-hover:border-gray-300 group-hover:opacity-70 transition-all duration-300 z-20 pointer-events-none" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80 z-10" />
-                <Image
-                  src={src}
-                  alt={`Pedro Art ${index + 1}`}
-                  width={600}
-                  height={600}
-                  className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105 relative z-0"
-                  priority={index < 4}
-                />
-                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-30">
-                  <p className="text-gray-300 text-sm font-mono">PEDRO #{index + 1}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </section>
       </div>
     </>
   );
 }
 
-// TypingText component for the typing animation
 const TypingText = ({ text, speed, onComplete }: { text: string; speed: number; onComplete: () => void }) => {
   const [displayedText, setDisplayedText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);

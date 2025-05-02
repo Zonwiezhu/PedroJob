@@ -57,9 +57,9 @@ const Navbar = () => {
               height={40}
             />
             <span className="hidden sm:inline flex items-center gap-2">
-              <span className="font-mono">PEDRO x ART</span>
+              <span className="font-mono">PEDRO x JOB</span>
             </span>
-            <span className="sm:hidden font-mono">PEDRO x ART</span>
+            <span className="sm:hidden font-mono">PEDRO x JOB</span>
           </Link>
 
           {!isLargeScreen && (
@@ -125,11 +125,9 @@ const Navbar = () => {
 
           <ul className="flex flex-col gap-4 mx-auto lg:gap-6 xl:gap-5 text-neutral-950 items-center mt-20 lg:mt-0 lg:flex-row">
             {[
-              { href: "/artsy", label: "ARTSY" },
-              { href: "/memezone", label: "MEMEZONE" },
-              { href: "/factory", label: "FACTORY" },
-              { href: "/editor", label: "EDITOR" },
-              { href: "/nftgen", label: "NFTGEN" },
+              { href: "/vacancy", label: "VACANCY" },
+              { href: "/talent", label: "TALENT" },
+              { href: "/upload", label: "UPLOAD" },
               { href: "https://pedroinjraccoon.online/", label: "MAINPAGE" },
             ].map((item) => (
               <li
