@@ -127,7 +127,8 @@ const Navbar = () => {
             {[
               { href: "/vacancy", label: "VACANCY" },
               { href: "/talent", label: "TALENT" },
-              { href: "/upload", label: "UPLOAD" },
+              { href: "/uploadcv", label: "UPLOAD TALENT" },
+              { href: "/uploadvc", label: "UPLOAD VACANCY" },
               { href: "https://pedroinjraccoon.online/", label: "MAINPAGE" },
             ].map((item) => (
               <li

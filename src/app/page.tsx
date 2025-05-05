@@ -29,7 +29,7 @@ export default function AltHomePage() {
           <div className="absolute inset-0 bg-black opacity-10" />
           <div className="absolute inset-0">
             <Image
-              src="/wallpaper3.png"
+              src="/wallpaper5.png"
               alt="Background texture"
               layout="fill"
               objectFit="cover"
@@ -87,7 +87,7 @@ export default function AltHomePage() {
                 whileTap={{ scale: 0.95 }}
               >
                 <button className="px-8 py-3 border-2 border-gray-400 bg-transparent text-gray-300 text-lg font-mono hover:bg-white hover:text-black hover:border-white transition-all duration-300">
-                  SUBMIT YOUR CV
+                  SUBMIT CV
                 </button>
               </motion.a>
             </motion.div>
