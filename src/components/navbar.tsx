@@ -129,6 +129,7 @@ const Navbar = () => {
               { href: "/vacancy", label: "VACANCY" },
               { href: "/uploadcv", label: "UPLOAD CV" },
               { href: "/uploadjob", label: "UPLOAD JOB" },
+              { href: "/login", label: "LOGIN" },
               { href: "https://pedroinjraccoon.online/", label: "MAIN" },
             ].map((item) => (
               <li
