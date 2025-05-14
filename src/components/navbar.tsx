@@ -125,11 +125,11 @@ const Navbar = () => {
 
           <ul className="flex flex-col gap-4 mx-auto lg:gap-6 xl:gap-5 text-neutral-950 items-center mt-20 lg:mt-0 lg:flex-row">
             {[
-              { href: "/vacancy", label: "VACANCY" },
               { href: "/talent", label: "TALENT" },
-              { href: "/uploadcv", label: "UPLOAD TALENT" },
-              { href: "/uploadvc", label: "UPLOAD VACANCY" },
-              { href: "https://pedroinjraccoon.online/", label: "MAINPAGE" },
+              { href: "/vacancy", label: "VACANCY" },
+              { href: "/uploadcv", label: "UPLOAD CV" },
+              { href: "/uploadjob", label: "UPLOAD JOB" },
+              { href: "https://pedroinjraccoon.online/", label: "MAIN" },
             ].map((item) => (
               <li
                 key={item.href}
