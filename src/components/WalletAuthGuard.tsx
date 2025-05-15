@@ -98,7 +98,7 @@ const WalletAuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) 
       const accounts = await offlineSigner.getAccounts();
       const address = accounts[0].address;
 
-      const message = "Welcome to Pedro's NFT Generator!";
+      const message = "Welcome to Injective Jobs - Your Web3 Career Platform!";
       await wallet.signArbitrary(chainId, address, message);
 
       localStorage.setItem("connectedWalletType", walletType);
@@ -113,7 +113,7 @@ const WalletAuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) 
         localStorage.setItem('nft_hold', result.nft_hold.toString());
         localStorage.setItem('token_hold', result.token_hold.toString());
       } else {
-        setModalMessage("Not enough $PEDRO or any Pedro NFT");
+        setModalMessage("Not enough $PEDRO or any Pedro NFT to access premium features");
         setIsModalOpen(true);
       }
     } catch (error) {
@@ -136,14 +136,14 @@ const WalletAuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) 
   return (
     <>
       <Head>
-        <title>Pedro | NFT Generator</title>
-        <meta name="description" content="Generate your NFT collection with Pedro" />
+        <title>Injective Jobs | Web3 Career Platform</title>
+        <meta name="description" content="Build your Web3 career on Injective - Showcase your skills and find opportunities" />
       </Head>
 
       <div className="min-h-screen bg-black text-white overflow-hidden font-mono selection:bg-white selection:text-black">
         <div className="fixed inset-0 overflow-hidden pointer-events-none">
           <Image
-            src="/wallpaper4.png"
+            src="/wallpaper7.png"
             alt="Background"
             layout="fill"
             objectFit="cover"
@@ -166,7 +166,7 @@ const WalletAuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) 
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                PEDRO X NFT
+                INJECTIVE CAREERS
               </motion.h1>
               <motion.div
                 initial={{ opacity: 0, scaleX: 0 }}
@@ -190,7 +190,7 @@ const WalletAuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) 
                     <div className="w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
                   </div>
                   <div className="absolute left-0 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
-                    <span className="text-2xl">🔑</span>
+                    <span className="text-2xl">💼</span>
                   </div>
                 </motion.div>
               </div>
@@ -271,7 +271,7 @@ const WalletAuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) 
                     <div className="w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
                   </div>
                   <div className="absolute right-0 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
-                    <span className="text-2xl">🦝</span>
+                    <span className="text-2xl">🚀</span>
                   </div>
                 </motion.div>
               </div>
@@ -302,8 +302,8 @@ const WalletAuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) 
                   </div>
                   <h3 className="text-xl font-bold mb-3 text-white">Simple Pricing</h3>
                   <p className="text-gray-300 text-sm">
-                    <span className="block mb-1">• 1 $PEDRO for holders</span>
-                    <span className="block">• 100,000 $PEDRO for others</span>
+                    <span className="block mb-1">• 1 $PEDRO for Pedro holders</span>
+                    <span className="block">• 25,000 $PEDRO for others</span>
                   </p>
                 </div>
               </motion.div>
@@ -321,12 +321,12 @@ const WalletAuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) 
               >
                 <div className="p-6">
                   <div className="bg-white/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                    <span className="text-2xl">✨</span>
+                    <span className="text-2xl">📝</span>
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-white">Powerful Features</h3>
+                  <h3 className="text-xl font-bold mb-3 text-white">Web3 CV Builder</h3>
                   <p className="text-gray-300 text-sm">
-                    <span className="block mb-1">• No-code solution</span>
-                    <span className="block">• Up to 5,000 NFTs per collection</span>
+                    <span className="block mb-1">• Showcase your skills</span>
+                    <span className="block">• Verified on-chain credentials</span>
                   </p>
                 </div>
               </motion.div>
@@ -344,12 +344,12 @@ const WalletAuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) 
               >
                 <div className="p-6">
                   <div className="bg-white/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                    <span className="text-2xl">🛠️</span>
+                    <span className="text-2xl">🔒</span>
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-white">Easy to Use</h3>
+                  <h3 className="text-xl font-bold mb-3 text-white">Manage Your Profile</h3>
                   <p className="text-gray-300 text-sm">
-                    <span className="block mb-1">• PNG/JPEG layers support</span>
-                    <span className="block">• Full metadata for Talis Protocol</span>
+                    <span className="block mb-1">• Edit your CV anytime</span>
+                    <span className="block">• 1-year visibility guarantee</span>
                   </p>
                 </div>
               </motion.div>
@@ -359,38 +359,30 @@ const WalletAuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) 
           <section className="relative py-6 overflow-hidden">
             <div className="scrolling-images-container w-full py-8">
               <div className="scrolling-images flex space-x-8">
-                {[...Array(24)].map((_, i) => (
+                {[...Array(6)].map((_, i) => (
                   <motion.div
-                    key={`pedro-${i+1}`}
+                    key={`company-${i+1}`}
                     className="flex-shrink-0"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: i * 0.05, duration: 0.5 }}
                   >
-                    <Image
-                      src={`/Pedro${i+1}.png`}
-                      alt={`Pedro ${i+1}`}
-                      width={200}
-                      height={200}
-                      className="rounded-lg object-cover h-48 w-48"
-                    />
+                    <div className="rounded-lg bg-white/10 h-48 w-48 flex items-center justify-center">
+                      <span className="text-4xl">{['🏦','💻','🖥️','📊','🔗','⚙️'][i]}</span>
+                    </div>
                   </motion.div>
                 ))}
-                {[...Array(24)].map((_, i) => (
+                {[...Array(6)].map((_, i) => (
                   <motion.div
-                    key={`pedro-dupe-${i+1}`}
+                    key={`company-dupe-${i+1}`}
                     className="flex-shrink-0"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: i * 0.05, duration: 0.5 }}
                   >
-                    <Image
-                      src={`/Pedro${i+1}.png`}
-                      alt={`Pedro ${i+1}`}
-                      width={100}
-                      height={100}
-                      className="rounded-lg object-cover h-24 w-24"
-                    />
+                    <div className="rounded-lg bg-white/10 h-24 w-24 flex items-center justify-center">
+                      <span className="text-2xl">{['🏦','💻','🖥️','📊','🔗','⚙️'][i]}</span>
+                    </div>
                   </motion.div>
                 ))}
               </div>

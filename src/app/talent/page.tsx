@@ -3,8 +3,9 @@ import { motion } from "framer-motion";
 import Head from "next/head";
 import Image from "next/image";
 import { useState, useEffect, JSX } from 'react';
-import { FaLinkedin, FaGithub, FaTelegram, FaEnvelope, FaPhone, FaGlobe, FaUserTie, FaGraduationCap, FaCode, FaMapMarkerAlt, FaChevronLeft } from "react-icons/fa";
-import { SiGmail, SiTypescript, SiJavascript, SiPython, SiSolidity, SiReact, SiNextdotjs, SiNodedotjs } from "react-icons/si";
+import { FaLinkedin, FaGithub, FaTelegram, FaEnvelope, FaPhone, FaGlobe, FaUserTie, FaGraduationCap, FaCode, FaMapMarkerAlt, FaChevronLeft, FaFilter, FaSearch } from "react-icons/fa";
+import { SiGmail, SiTypescript, SiJavascript, SiPython, SiSolidity, SiReact, SiNextdotjs, SiNodedotjs, SiEthereum, SiBitcoin } from "react-icons/si";
+import { RiCloseFill } from "react-icons/ri";
 
 interface Talent {
   id: string;
@@ -22,6 +23,11 @@ interface Talent {
   phone: string;
   portfolio: string;
   available: boolean;
+  hourlyRate?: string;
+  timezone?: string;
+  blockchainExperience?: string[];
+  projectType?: string[];
+  workPreference?: string[];
 }
 
 const talents: Talent[] = [
@@ -29,7 +35,7 @@ const talents: Talent[] = [
     id: '1',
     name: 'Alex Johnson',
     role: 'Full-Stack Developer',
-    skills: ['TypeScript', 'React', 'Node.js', 'Next.js', 'Solidity'],
+    skills: ['TypeScript', 'React', 'Node.js', 'Next.js', 'Solidity', 'Ethereum', 'Web3.js'],
     experience: '5 years',
     education: 'MSc Computer Science, MIT',
     location: 'San Francisco, USA',
@@ -40,13 +46,18 @@ const talents: Talent[] = [
     email: 'alex.johnson@example.com',
     phone: '+1 415 555 1234',
     portfolio: 'alexjohnson.dev',
-    available: true
+    available: true,
+    hourlyRate: '$80-$120',
+    timezone: 'PST (UTC-8)',
+    blockchainExperience: ['DeFi', 'NFT', 'DAOs'],
+    projectType: ['Full-time', 'Part-time', 'Contract'],
+    workPreference: ['Remote', 'Hybrid']
   },
   {
     id: '2',
     name: 'Maria Chen',
     role: 'Blockchain Engineer',
-    skills: ['Solidity', 'Rust', 'Go', 'Ethereum', 'Cosmos'],
+    skills: ['Solidity', 'Rust', 'Go', 'Ethereum', 'Cosmos', 'Substrate', 'ZKPs'],
     experience: '3 years',
     education: 'BSc Computer Engineering, ETH Zurich',
     location: 'Berlin, Germany',
@@ -57,13 +68,18 @@ const talents: Talent[] = [
     email: 'maria.chen@example.com',
     phone: '+49 30 555 6789',
     portfolio: 'mariachen.xyz',
-    available: true
+    available: true,
+    hourlyRate: '$100-$150',
+    timezone: 'CET (UTC+1)',
+    blockchainExperience: ['DeFi', 'Infrastructure', 'Security'],
+    projectType: ['Full-time', 'Contract'],
+    workPreference: ['Remote']
   },
   {
     id: '3',
     name: 'David Kim',
     role: 'Frontend Developer',
-    skills: ['React', 'TypeScript', 'UI/UX', 'CSS', 'Figma'],
+    skills: ['React', 'TypeScript', 'UI/UX', 'CSS', 'Figma', 'Three.js', 'WebGL'],
     experience: '4 years',
     education: 'BFA Design, Parsons',
     location: 'Seoul, South Korea',
@@ -74,13 +90,18 @@ const talents: Talent[] = [
     email: 'david.kim@example.com',
     phone: '+82 2 555 9876',
     portfolio: 'davidkim.design',
-    available: false
+    available: false,
+    hourlyRate: '$60-$90',
+    timezone: 'KST (UTC+9)',
+    blockchainExperience: ['NFT', 'Gaming'],
+    projectType: ['Part-time', 'Contract'],
+    workPreference: ['Remote', 'On-site']
   },
   {
     id: '4',
     name: 'Sarah Williams',
     role: 'DevOps Engineer',
-    skills: ['AWS', 'Docker', 'Kubernetes', 'CI/CD', 'Terraform'],
+    skills: ['AWS', 'Docker', 'Kubernetes', 'CI/CD', 'Terraform', 'Ansible', 'Blockchain Nodes'],
     experience: '6 years',
     education: 'BSc Systems Engineering, Georgia Tech',
     location: 'Remote',
@@ -91,13 +112,18 @@ const talents: Talent[] = [
     email: 'sarah.williams@example.com',
     phone: '+1 404 555 4321',
     portfolio: 'sarahwilliams.tech',
-    available: true
+    available: true,
+    hourlyRate: '$90-$130',
+    timezone: 'EST (UTC-5)',
+    blockchainExperience: ['Infrastructure', 'Node Operations'],
+    projectType: ['Full-time', 'Contract'],
+    workPreference: ['Remote']
   },
   {
     id: '5',
     name: 'James Rodriguez',
     role: 'Smart Contract Auditor',
-    skills: ['Solidity', 'Security', 'EVM', 'DeFi', 'Cryptography'],
+    skills: ['Solidity', 'Security', 'EVM', 'DeFi', 'Cryptography', 'Vyper', 'Formal Verification'],
     experience: '4 years',
     education: 'PhD Computer Security, Stanford',
     location: 'Singapore',
@@ -108,7 +134,56 @@ const talents: Talent[] = [
     email: 'james.r@example.com',
     phone: '+65 6 555 1234',
     portfolio: 'jamesaudit.com',
-    available: true
+    available: true,
+    hourlyRate: '$120-$180',
+    timezone: 'SGT (UTC+8)',
+    blockchainExperience: ['DeFi', 'Security', 'Protocols'],
+    projectType: ['Contract', 'Part-time'],
+    workPreference: ['Remote']
+  },
+  {
+    id: '6',
+    name: 'Emma Watson',
+    role: 'Community Manager',
+    skills: ['Discord', 'Telegram', 'Social Media', 'Content Creation', 'Moderation', 'Growth Hacking'],
+    experience: '3 years',
+    education: 'BA Communications, UCLA',
+    location: 'London, UK',
+    bio: 'Experienced community builder with expertise in growing and engaging crypto communities across multiple platforms.',
+    telegram: '@emmacm',
+    linkedin: 'linkedin.com/in/emmawatson',
+    github: 'github.com/emmacm',
+    email: 'emma.w@example.com',
+    phone: '+44 20 555 6789',
+    portfolio: 'emmawatson.com',
+    available: true,
+    hourlyRate: '$50-$80',
+    timezone: 'GMT (UTC+0)',
+    blockchainExperience: ['DAOs', 'NFT', 'SocialFi'],
+    projectType: ['Full-time', 'Part-time'],
+    workPreference: ['Remote', 'Hybrid']
+  },
+  {
+    id: '7',
+    name: 'Liam Smith',
+    role: 'Blockchain Researcher',
+    skills: ['Tokenomics', 'Governance', 'Cryptoeconomics', 'Whitepapers', 'Technical Writing'],
+    experience: '5 years',
+    education: 'PhD Economics, Cambridge',
+    location: 'New York, USA',
+    bio: 'Blockchain researcher specializing in tokenomics design and governance mechanisms for decentralized protocols.',
+    telegram: '@liamresearch',
+    linkedin: 'linkedin.com/in/liamsmith',
+    github: 'github.com/liamresearch',
+    email: 'liam.s@example.com',
+    phone: '+1 212 555 1234',
+    portfolio: 'liamsmith.xyz',
+    available: false,
+    hourlyRate: '$100-$150',
+    timezone: 'EST (UTC-5)',
+    blockchainExperience: ['DeFi', 'DAOs', 'Protocol Design'],
+    projectType: ['Consulting', 'Part-time'],
+    workPreference: ['Remote']
   }
 ];
 
@@ -122,7 +197,7 @@ const skillIcons: Record<string, JSX.Element> = {
   'Node.js': <SiNodedotjs className="text-green-500" />,
   'Rust': <span className="text-orange-500 font-bold">Rust</span>,
   'Go': <span className="text-blue-500 font-bold">Go</span>,
-  'Ethereum': <span className="text-purple-400 font-bold">ETH</span>,
+  'Ethereum': <SiEthereum className="text-purple-400" />,
   'Cosmos': <span className="text-blue-300 font-bold">ATOM</span>,
   'UI/UX': <span className="text-pink-500 font-bold">UI/UX</span>,
   'CSS': <span className="text-blue-300 font-bold">CSS</span>,
@@ -135,18 +210,52 @@ const skillIcons: Record<string, JSX.Element> = {
   'Security': <span className="text-red-500 font-bold">Sec</span>,
   'EVM': <span className="text-gray-400 font-bold">EVM</span>,
   'DeFi': <span className="text-yellow-500 font-bold">DeFi</span>,
-  'Cryptography': <span className="text-indigo-500 font-bold">Crypto</span>
+  'Cryptography': <span className="text-indigo-500 font-bold">Crypto</span>,
+  'Web3.js': <span className="text-blue-400 font-bold">Web3</span>,
+  'Substrate': <span className="text-pink-500 font-bold">Sub</span>,
+  'ZKPs': <span className="text-indigo-400 font-bold">ZKP</span>,
+  'Three.js': <span className="text-green-400 font-bold">3JS</span>,
+  'WebGL': <span className="text-orange-400 font-bold">WebGL</span>,
+  'Discord': <span className="text-indigo-400 font-bold">Discord</span>,
+  'Telegram': <span className="text-blue-400 font-bold">TG</span>,
+  'Social Media': <span className="text-pink-400 font-bold">SM</span>,
+  'Content Creation': <span className="text-purple-400 font-bold">Content</span>,
+  'Moderation': <span className="text-green-400 font-bold">Mod</span>,
+  'Growth Hacking': <span className="text-red-400 font-bold">Growth</span>,
+  'Tokenomics': <span className="text-yellow-400 font-bold">Token</span>,
+  'Governance': <span className="text-blue-400 font-bold">Gov</span>,
+  'Cryptoeconomics': <span className="text-indigo-400 font-bold">CryptoEcon</span>,
+  'Whitepapers': <span className="text-gray-400 font-bold">WP</span>,
+  'Technical Writing': <span className="text-blue-300 font-bold">TW</span>,
+  'Vyper': <span className="text-blue-500 font-bold">Vyper</span>,
+  'Formal Verification': <span className="text-purple-500 font-bold">FV</span>,
+  'Bitcoin': <SiBitcoin className="text-orange-500" />,
+  'Blockchain Nodes': <span className="text-green-500 font-bold">Nodes</span>
 };
 
+const blockchainExperienceOptions = ['DeFi', 'NFT', 'DAOs', 'Gaming', 'Infrastructure', 'Security', 'Protocols', 'SocialFi', 'Node Operations'];
+const projectTypeOptions = ['Full-time', 'Part-time', 'Contract', 'Consulting'];
+const workPreferenceOptions = ['Remote', 'Hybrid', 'On-site'];
+const hourlyRateRanges = ['<$50', '$50-$80', '$80-$120', '$120-$150', '$150+'];
+const experienceRanges = ['<1 year', '1-3 years', '3-5 years', '5-7 years', '7+ years'];
+
 export default function TalentPool() {
-  const [selectedTalent, setSelectedTalent] = useState<Talent | null>(talents[0]);
-  const [copied, setCopied] = useState<string | null>(null);
+  const [selectedTalent, setSelectedTalent] = useState<Talent | null>(null);
   const [isMobileView, setIsMobileView] = useState(false);
   const [showDetailView, setShowDetailView] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
+  
   const [filters, setFilters] = useState({
     role: 'All',
-    skills: 'All',
-    availability: 'All'
+    skills: [] as string[],
+    availability: 'All',
+    blockchainExperience: [] as string[],
+    projectType: [] as string[],
+    workPreference: [] as string[],
+    hourlyRate: [] as string[],
+    experience: [] as string[],
+    timezone: ''
   });
 
   useEffect(() => {
@@ -156,28 +265,87 @@ export default function TalentPool() {
     
     handleResize();
     window.addEventListener('resize', handleResize);
+    
+    // Set initial selected talent if not set
+    if (!selectedTalent && talents.length > 0) {
+      setSelectedTalent(talents[0]);
+    }
+    
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const copyToClipboard = (text: string, type: string) => {
-    navigator.clipboard.writeText(text);
-    setCopied(type);
-    setTimeout(() => setCopied(null), 2000);
-  };
-
   const roles = ['All', ...Array.from(new Set(talents.map(talent => talent.role)))];
   const allSkills = Array.from(new Set(talents.flatMap(talent => talent.skills)));
-  const skillOptions = ['All', ...allSkills];
+  const timezones = Array.from(new Set(talents.map(talent => talent.timezone).filter(Boolean)));
 
   const filteredTalents = talents.filter(talent => {
+    // Search filter
+    if (searchQuery && !talent.name.toLowerCase().includes(searchQuery.toLowerCase())) {
+      return false;
+    }
+    
+    // Role filter
     if (filters.role !== 'All' && talent.role !== filters.role) return false;
     
-    if (filters.skills !== 'All' && !talent.skills.includes(filters.skills)) return false;
+    // Skills filter
+    if (filters.skills.length > 0 && !filters.skills.some(skill => talent.skills.includes(skill))) return false;
     
+    // Availability filter
     if (filters.availability !== 'All') {
       if (filters.availability === 'Available' && !talent.available) return false;
       if (filters.availability === 'Unavailable' && talent.available) return false;
     }
+    
+    // Blockchain experience filter
+    if (filters.blockchainExperience.length > 0 && talent.blockchainExperience && 
+        !filters.blockchainExperience.some(exp => talent.blockchainExperience?.includes(exp))) {
+      return false;
+    }
+    
+    // Project type filter
+    if (filters.projectType.length > 0 && talent.projectType && 
+        !filters.projectType.some(type => talent.projectType?.includes(type))) {
+      return false;
+    }
+    
+    // Work preference filter
+    if (filters.workPreference.length > 0 && talent.workPreference && 
+        !filters.workPreference.some(pref => talent.workPreference?.includes(pref))) {
+      return false;
+    }
+    
+    // Hourly rate filter
+    if (filters.hourlyRate.length > 0 && talent.hourlyRate) {
+      const rateMatch = filters.hourlyRate.some(range => {
+        if (range === '<$50') return parseFloat(talent.hourlyRate!.replace('$', '').split('-')[0]) < 50;
+        if (range === '$50-$80') return parseFloat(talent.hourlyRate!.replace('$', '').split('-')[0]) >= 50 && 
+                                    parseFloat(talent.hourlyRate!.replace('$', '').split('-')[0]) <= 80;
+        if (range === '$80-$120') return parseFloat(talent.hourlyRate!.replace('$', '').split('-')[0]) >= 80 && 
+                                      parseFloat(talent.hourlyRate!.replace('$', '').split('-')[0]) <= 120;
+        if (range === '$120-$150') return parseFloat(talent.hourlyRate!.replace('$', '').split('-')[0]) >= 120 && 
+                                       parseFloat(talent.hourlyRate!.replace('$', '').split('-')[0]) <= 150;
+        if (range === '$150+') return parseFloat(talent.hourlyRate!.replace('$', '').split('-')[0]) > 150;
+        return false;
+      });
+      if (!rateMatch) return false;
+    }
+    
+    // Experience filter
+    if (filters.experience.length > 0 && talent.experience) {
+      const expMatch = filters.experience.some(range => {
+        const years = parseInt(talent.experience);
+        if (range === '<1 year') return years < 1;
+        if (range === '1-3 years') return years >= 1 && years <= 3;
+        if (range === '3-5 years') return years >= 3 && years <= 5;
+        if (range === '5-7 years') return years >= 5 && years <= 7;
+        if (range === '7+ years') return years > 7;
+        return false;
+      });
+      if (!expMatch) return false;
+    }
+    
+    // Timezone filter
+    if (filters.timezone && talent.timezone !== filters.timezone) return false;
     
     return true;
   });
@@ -193,12 +361,52 @@ export default function TalentPool() {
     setShowDetailView(false);
   };
 
-  const handleFilterChange = (filterType: string, value: string) => {
+  const handleFilterChange = (filterType: string, value: string | string[]) => {
     setFilters(prev => ({
       ...prev,
       [filterType]: value
     }));
   };
+
+  const toggleArrayFilter = (filterType: string, value: string) => {
+    setFilters(prev => {
+      const currentArray = prev[filterType as keyof typeof filters] as string[];
+      if (currentArray.includes(value)) {
+        return {
+          ...prev,
+          [filterType]: currentArray.filter(item => item !== value)
+        };
+      } else {
+        return {
+          ...prev,
+          [filterType]: [...currentArray, value]
+        };
+      }
+    });
+  };
+
+  const clearFilters = () => {
+    setFilters({
+      role: 'All',
+      skills: [],
+      availability: 'All',
+      blockchainExperience: [],
+      projectType: [],
+      workPreference: [],
+      hourlyRate: [],
+      experience: [],
+      timezone: ''
+    });
+    setSearchQuery('');
+  };
+
+  const activeFilterCount = Object.values(filters).reduce((count, filter) => {
+    if (Array.isArray(filter)) {
+      return count + filter.length;
+    } else {
+      return count + (filter !== 'All' && filter !== '' ? 1 : 0);
+    }
+  }, 0);
 
   return (
     <>
@@ -233,51 +441,216 @@ export default function TalentPool() {
           <div className="flex flex-col lg:flex-row gap-8">
             <div className={`lg:w-1/3 space-y-4 ${isMobileView && showDetailView ? 'hidden' : 'block'}`}>
               <div className="bg-black p-4 rounded-xl border border-gray-700 backdrop-blur-sm">
-                <div className="flex items-center gap-2 mb-3 text-gray-300">
-                  <FaUserTie />
-                  <span className="font-medium">Filter Talent</span>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="relative w-full max-w-md">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <FaSearch className="text-gray-400" />
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Search by name..."
+                      className="w-full pl-10 pr-4 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                  </div>
+                  <button 
+                    onClick={() => setShowFilters(!showFilters)}
+                    className="ml-2 p-2 bg-gray-800 hover:bg-gray-700 rounded-md flex items-center gap-1"
+                  >
+                    <FaFilter />
+                    {activeFilterCount > 0 && (
+                      <span className="text-xs bg-purple-600 rounded-full w-5 h-5 flex items-center justify-center">
+                        {activeFilterCount}
+                      </span>
+                    )}
+                  </button>
                 </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs text-gray-400 mb-1">Role</label>
-                    <select 
-                      className="w-full bg-gray-900 border border-gray-700 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-gray-500"
-                      value={filters.role}
-                      onChange={(e) => handleFilterChange('role', e.target.value)}
-                    >
-                      {roles.map(role => (
-                        <option key={role} value={role}>{role}</option>
-                      ))}
-                    </select>
+
+                {showFilters && (
+                  <div className="mt-4 space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs text-gray-400 mb-1">Role</label>
+                        <select 
+                          className="w-full bg-gray-900 border border-gray-700 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-gray-500"
+                          value={filters.role}
+                          onChange={(e) => handleFilterChange('role', e.target.value)}
+                        >
+                          {roles.map(role => (
+                            <option key={role} value={role}>{role}</option>
+                          ))}
+                        </select>
+                      </div>
+                      
+                      <div>
+                        <label className="block text-xs text-gray-400 mb-1">Availability</label>
+                        <select 
+                          className="w-full bg-gray-900 border border-gray-700 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-gray-500"
+                          value={filters.availability}
+                          onChange={(e) => handleFilterChange('availability', e.target.value)}
+                        >
+                          <option value="All">All</option>
+                          <option value="Available">Available</option>
+                          <option value="Unavailable">Unavailable</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs text-gray-400 mb-1">Skills</label>
+                      <div className="flex flex-wrap gap-2">
+                        {allSkills.slice(0, 10).map(skill => (
+                          <button
+                            key={skill}
+                            type="button"
+                            onClick={() => toggleArrayFilter('skills', skill)}
+                            className={`px-2 py-1 text-xs rounded-full flex items-center gap-1 transition-colors ${
+                              filters.skills.includes(skill)
+                                ? 'bg-white text-black'
+                                : 'bg-gray-800/50 border border-gray-700 hover:bg-gray-700/50'
+                            }`}
+                          >
+                            {skillIcons[skill] || skill}
+                            {skill}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs text-gray-400 mb-1">Blockchain Experience</label>
+                      <div className="flex flex-wrap gap-2">
+                        {blockchainExperienceOptions.map(exp => (
+                          <button
+                            key={exp}
+                            type="button"
+                            onClick={() => toggleArrayFilter('blockchainExperience', exp)}
+                            className={`px-2 py-1 text-xs rounded-full ${
+                              filters.blockchainExperience.includes(exp)
+                                ? 'bg-purple-600'
+                                : 'bg-gray-800/50 border border-gray-700 hover:bg-gray-700/50'
+                            }`}
+                          >
+                            {exp}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs text-gray-400 mb-1">Project Type</label>
+                      <div className="flex flex-wrap gap-2">
+                        {projectTypeOptions.map(type => (
+                          <button
+                            key={type}
+                            type="button"
+                            onClick={() => toggleArrayFilter('projectType', type)}
+                            className={`px-2 py-1 text-xs rounded-full ${
+                              filters.projectType.includes(type)
+                                ? 'bg-blue-600'
+                                : 'bg-gray-800/50 border border-gray-700 hover:bg-gray-700/50'
+                            }`}
+                          >
+                            {type}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs text-gray-400 mb-1">Work Preference</label>
+                      <div className="flex flex-wrap gap-2">
+                        {workPreferenceOptions.map(pref => (
+                          <button
+                            key={pref}
+                            type="button"
+                            onClick={() => toggleArrayFilter('workPreference', pref)}
+                            className={`px-2 py-1 text-xs rounded-full ${
+                              filters.workPreference.includes(pref)
+                                ? 'bg-green-600'
+                                : 'bg-gray-800/50 border border-gray-700 hover:bg-gray-700/50'
+                            }`}
+                          >
+                            {pref}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs text-gray-400 mb-1">Hourly Rate</label>
+                        <div className="flex flex-wrap gap-2">
+                          {hourlyRateRanges.map(rate => (
+                            <button
+                              key={rate}
+                              type="button"
+                              onClick={() => toggleArrayFilter('hourlyRate', rate)}
+                              className={`px-2 py-1 text-xs rounded-full ${
+                                filters.hourlyRate.includes(rate)
+                                  ? 'bg-yellow-600'
+                                  : 'bg-gray-800/50 border border-gray-700 hover:bg-gray-700/50'
+                              }`}
+                            >
+                              {rate}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs text-gray-400 mb-1">Experience</label>
+                        <div className="flex flex-wrap gap-2">
+                          {experienceRanges.map(exp => (
+                            <button
+                              key={exp}
+                              type="button"
+                              onClick={() => toggleArrayFilter('experience', exp)}
+                              className={`px-2 py-1 text-xs rounded-full ${
+                                filters.experience.includes(exp)
+                                  ? 'bg-red-600'
+                                  : 'bg-gray-800/50 border border-gray-700 hover:bg-gray-700/50'
+                              }`}
+                            >
+                              {exp}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs text-gray-400 mb-1">Timezone</label>
+                      <select 
+                        className="w-full bg-gray-900 border border-gray-700 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-gray-500"
+                        value={filters.timezone}
+                        onChange={(e) => handleFilterChange('timezone', e.target.value)}
+                      >
+                        <option value="">All Timezones</option>
+                        {timezones.map(tz => (
+                          <option key={tz} value={tz}>{tz}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="flex justify-between pt-2">
+                      <button
+                        onClick={clearFilters}
+                        className="text-xs text-gray-400 hover:text-white flex items-center gap-1"
+                      >
+                        <RiCloseFill />
+                        Clear all filters
+                      </button>
+                      <button
+                        onClick={() => setShowFilters(false)}
+                        className="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded"
+                      >
+                        Apply
+                      </button>
+                    </div>
                   </div>
-                  
-                  <div>
-                    <label className="block text-xs text-gray-400 mb-1">Skills</label>
-                    <select 
-                      className="w-full bg-gray-900 border border-gray-700 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-gray-500"
-                      value={filters.skills}
-                      onChange={(e) => handleFilterChange('skills', e.target.value)}
-                    >
-                      {skillOptions.map(skill => (
-                        <option key={skill} value={skill}>{skill}</option>
-                      ))}
-                    </select>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-xs text-gray-400 mb-1">Availability</label>
-                    <select 
-                      className="w-full bg-gray-900 border border-gray-700 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-gray-500"
-                      value={filters.availability}
-                      onChange={(e) => handleFilterChange('availability', e.target.value)}
-                    >
-                      <option value="All">All</option>
-                      <option value="Available">Available</option>
-                      <option value="Unavailable">Unavailable</option>
-                    </select>
-                  </div>
-                </div>
+                )}
               </div>
 
               <div className="space-y-4 max-h-[900px] overflow-y-auto pr-2">
@@ -292,7 +665,14 @@ export default function TalentPool() {
                     >
                       <div className="flex justify-between items-start">
                         <div className="flex-1 min-w-0">
-                          <h3 className="text-lg font-semibold truncate">{talent.name}</h3>
+                          <div className="flex items-center gap-2">
+                            <h3 className="text-lg font-semibold truncate">{talent.name}</h3>
+                            {talent.hourlyRate && (
+                              <span className="text-xs bg-yellow-900/30 text-yellow-300 px-2 py-0.5 rounded-full">
+                                {talent.hourlyRate}
+                              </span>
+                            )}
+                          </div>
                           <p className="text-sm text-gray-300 truncate">{talent.role}</p>
                           <div className="flex gap-1 mt-2 flex-wrap">
                             {talent.skills.slice(0, 3).map(skill => (
@@ -307,10 +687,13 @@ export default function TalentPool() {
                             )}
                           </div>
                         </div>
-                        <div className="flex items-center gap-1 text-xs ml-2">
+                        <div className="flex flex-col items-end gap-1 text-xs ml-2">
                           <span className={`px-2 py-1 rounded-full ${talent.available ? 'bg-green-900/30 text-green-300' : 'bg-red-900/30 text-red-300'}`}>
                             {talent.available ? 'Available' : 'Unavailable'}
                           </span>
+                          {talent.timezone && (
+                            <span className="text-xs text-gray-400">{talent.timezone}</span>
+                          )}
                         </div>
                       </div>
                     </motion.div>
@@ -360,6 +743,12 @@ export default function TalentPool() {
                             <FaUserTie className="text-sm" />
                             <span>{selectedTalent.experience} experience</span>
                           </div>
+                          {selectedTalent.hourlyRate && (
+                            <div className="flex items-center gap-1">
+                              <span className="text-yellow-300">${selectedTalent.hourlyRate}</span>
+                              <span className="text-xs">/hour</span>
+                            </div>
+                          )}
                         </div>
                       </div>
                       <div className="bg-gray-800/50 p-3 rounded-lg border border-gray-700 flex items-center justify-center">
@@ -395,6 +784,21 @@ export default function TalentPool() {
                             </span>
                           ))}
                         </div>
+
+                        {selectedTalent.blockchainExperience && (
+                          <>
+                            <h3 className="text-lg font-semibold mb-3 flex items-center gap-2 text-gray-200">
+                              Blockchain Experience
+                            </h3>
+                            <div className="flex flex-wrap gap-2 mb-6">
+                              {selectedTalent.blockchainExperience.map(exp => (
+                                <span key={exp} className="px-3 py-1 bg-purple-900/30 rounded-full text-sm">
+                                  {exp}
+                                </span>
+                              ))}
+                            </div>
+                          </>
+                        )}
                       </div>
 
                       <div className="space-y-6">
@@ -497,8 +901,44 @@ export default function TalentPool() {
                               <FaGlobe className="h-5 w-5 text-gray-400" />
                               <span className="text-gray-300">{selectedTalent.portfolio}</span>
                             </div>
+                            {selectedTalent.timezone && (
+                              <div className="flex items-center gap-3">
+                                <span className="h-5 w-5 text-gray-400">🌐</span>
+                                <span className="text-gray-300">{selectedTalent.timezone}</span>
+                              </div>
+                            )}
                           </div>
                         </div>
+
+                        {(selectedTalent.projectType || selectedTalent.workPreference) && (
+                          <div className="bg-gray-800/50 p-5 rounded-xl border border-gray-700">
+                            <h3 className="text-lg font-semibold mb-3 flex items-center gap-2 text-gray-200">
+                              Work Preferences
+                            </h3>
+                            <div className="space-y-3">
+                              {selectedTalent.projectType && (
+                                <div className="flex flex-wrap gap-2">
+                                  <span className="text-sm text-gray-400">Project Type:</span>
+                                  {selectedTalent.projectType.map(type => (
+                                    <span key={type} className="px-2 py-1 bg-blue-900/30 rounded-full text-sm">
+                                      {type}
+                                    </span>
+                                  ))}
+                                </div>
+                              )}
+                              {selectedTalent.workPreference && (
+                                <div className="flex flex-wrap gap-2">
+                                  <span className="text-sm text-gray-400">Work Preference:</span>
+                                  {selectedTalent.workPreference.map(pref => (
+                                    <span key={pref} className="px-2 py-1 bg-green-900/30 rounded-full text-sm">
+                                      {pref}
+                                    </span>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </motion.div>
