@@ -7,36 +7,40 @@ import { FaUserTie, FaGraduationCap, FaCode, FaMapMarkerAlt, FaLinkedin, FaGithu
 import { SiTypescript, SiJavascript, SiPython, SiSolidity, SiReact, SiNextdotjs, SiNodedotjs } from "react-icons/si";
 
 const skillIcons: Record<string, JSX.Element> = {
-  'TypeScript': <SiTypescript className="text-blue-500" />,
-  'JavaScript': <SiJavascript className="text-yellow-400" />,
-  'Python': <SiPython className="text-blue-400" />,
-  'Solidity': <SiSolidity className="text-gray-400" />,
-  'React': <SiReact className="text-blue-400" />,
-  'Next.js': <SiNextdotjs className="text-black dark:text-white" />,
-  'Node.js': <SiNodedotjs className="text-green-500" />,
-  'Rust': <span className="text-orange-500 font-bold">Rust</span>,
-  'Go': <span className="text-blue-500 font-bold">Go</span>,
-  'Ethereum': <span className="text-purple-400 font-bold">ETH</span>,
-  'Cosmos': <span className="text-blue-300 font-bold">ATOM</span>,
-  'UI/UX': <span className="text-pink-500 font-bold">UI/UX</span>,
-  'CSS': <span className="text-blue-300 font-bold">CSS</span>,
-  'Figma': <span className="text-purple-500 font-bold">Figma</span>,
-  'AWS': <span className="text-orange-400 font-bold">AWS</span>,
-  'Docker': <span className="text-blue-400 font-bold">Docker</span>,
-  'Kubernetes': <span className="text-blue-500 font-bold">K8s</span>,
-  'CI/CD': <span className="text-green-400 font-bold">CI/CD</span>,
-  'Terraform': <span className="text-purple-500 font-bold">TF</span>,
-  'Security': <span className="text-red-500 font-bold">Sec</span>,
-  'EVM': <span className="text-gray-400 font-bold">EVM</span>,
-  'DeFi': <span className="text-yellow-500 font-bold">DeFi</span>,
-  'Cryptography': <span className="text-indigo-500 font-bold">Crypto</span>,
-  'Blockchain Developer': <span className="text-blue-400 font-bold">Blockchain</span>,
-  'Community Manager': <span className="text-green-400 font-bold">Community</span>,
-  'UX Designer': <span className="text-pink-400 font-bold">UX</span>,
-  'NFT Artist': <span className="text-purple-400 font-bold">NFT</span>,
-  'Marketing': <span className="text-yellow-400 font-bold">Marketing</span>,
-  'Game Developer': <span className="text-red-400 font-bold">GameDev</span>,
-  'Blockchain Security': <span className="text-red-500 font-bold">Sec</span>,
+  'Smart Contracts': <span className="text-blue-400 font-bold">SC</span>,
+  'Cosmos SDK': <span className="text-blue-300 font-bold">CSDK</span>,
+  'Zero-Knowledge Proofs': <span className="text-indigo-500 font-bold">ZKP</span>,
+  'DAOs': <span className="text-red-400 font-bold">DAO</span>,
+  'Tokenomics': <span className="text-yellow-400 font-bold">Token</span>,
+  
+  'Community Manager': <span className="text-green-500 font-bold">CM</span>,
+  'Discord MOD': <span className="text-indigo-500 font-bold">DM</span>,
+  'Telegram Admin': <span className="text-blue-400 font-bold">TG</span>,
+  'X Strategist': <span className="text-black dark:text-white font-bold">X</span>,
+  'Social Media': <span className="text-pink-500 font-bold">SMM</span>,
+  'Content Creator': <span className="text-purple-500 font-bold">CC</span>,
+  'Influencer': <span className="text-fuchsia-500 font-bold">IM</span>,
+  'AMA Host': <span className="text-blue-300 font-bold">AMA</span>,
+  'Memes': <span className="text-yellow-400 font-bold">Memes</span>,
+
+  'NFT Creator': <span className="text-purple-400 font-bold">NFT</span>,
+  'Generative Art': <span className="text-pink-400 font-bold">GenArt</span>,
+  'Pixel Art': <span className="text-red-400 font-bold">Pixel</span>,
+  '3D Modeling': <span className="text-blue-400 font-bold">3D</span>,
+  'Blender': <span className="text-orange-500 font-bold">Blender</span>,
+  'Talis Expert': <span className="text-blue-500 font-bold">Talis</span>,
+  'NFT Marketing': <span className="text-green-400 font-bold">NFTM</span>,
+  'NFT Collector': <span className="text-yellow-500 font-bold">NFTC</span>,
+
+  'Collab Manager': <span className="text-purple-500 font-bold">CM</span>,
+  'DAO Contributor': <span className="text-blue-400 font-bold">DAO</span>,
+  'Governance Expert': <span className="text-green-500 font-bold">GE</span>,
+  'Event Organizer': <span className="text-red-500 font-bold">EO</span>,
+  'Grant Writer': <span className="text-yellow-500 font-bold">GW</span>,
+  'KOL Outreach': <span className="text-pink-500 font-bold">KO</span>,
+  'Project Manager': <span className="text-orange-500 font-bold">PM</span>,
+  'Crypto Educator': <span className="text-blue-300 font-bold">CE</span>,
+  'Whitepaper': <span className="text-gray-500 font-bold">WW</span>,
 };
 
 const allSkills = Object.keys(skillIcons);
@@ -55,16 +59,39 @@ const educationLevels = [
 ];
 
 const countries = [
-  'United States', 'China', 'India', 'Japan', 'Germany', 'United Kingdom', 'France',
-  'Brazil', 'Italy', 'Canada', 'South Korea', 'Russia', 'Australia', 'Spain',
-  'Mexico', 'Indonesia', 'Netherlands', 'Saudi Arabia', 'Turkey', 'Switzerland'
+  'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda', 'Argentina', 'Armenia',
+  'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 
+  'Belize', 'Benin', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Brunei', 'Bulgaria',
+  'Burkina Faso', 'Burundi', 'Cabo Verde', 'Cambodia', 'Cameroon', 'Canada', 'Central African Republic', 'Chad',
+  'Chile', 'China', 'Colombia', 'Comoros', 'Congo (Democratic Republic)', 'Congo (Republic)', 'Costa Rica',
+  'Croatia', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador',
+  'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Eswatini', 'Ethiopia', 'Fiji', 'Finland',
+  'France', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Greece', 'Grenada', 'Guatemala', 'Guinea',
+  'Guinea-Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland',
+  'Israel', 'Italy', 'Ivory Coast', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Kuwait',
+  'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg',
+  'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Mauritania', 'Mauritius',
+  'Mexico', 'Micronesia', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Myanmar',
+  'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'North Korea',
+  'North Macedonia', 'Norway', 'Oman', 'Pakistan', 'Palau', 'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay',
+  'Peru', 'Philippines', 'Poland', 'Portugal', 'Qatar', 'Romania', 'Russia', 'Rwanda', 'Saint Kitts and Nevis',
+  'Saint Lucia', 'Saint Vincent and the Grenadines', 'Samoa', 'San Marino', 'Sao Tome and Principe', 'Saudi Arabia',
+  'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia',
+  'South Africa', 'South Korea', 'South Sudan', 'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Sweden', 'Switzerland',
+  'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor-Leste', 'Togo', 'Tonga', 'Trinidad and Tobago',
+  'Tunisia', 'Turkey', 'Turkmenistan', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom',
+  'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City', 'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe'
 ];
+
 
 const languages = [
   'English', 'Mandarin', 'Hindi', 'Spanish', 'French', 'Arabic', 'Bengali',
   'Russian', 'Portuguese', 'Indonesian', 'Urdu', 'German', 'Japanese',
-  'Swahili', 'Marathi', 'Telugu', 'Turkish', 'Tamil', 'Vietnamese', 'Korean'
+  'Swahili', 'Marathi', 'Telugu', 'Turkish', 'Tamil', 'Vietnamese', 'Korean',
+  'Punjabi', 'Persian', 'Malay', 'Italian', 'Thai', 'Dutch',
+  'Hausa', 'Tagalog', 'Burmese', 'Polish', 'Ukrainian', 'Greek', 'Hungarian'
 ];
+
 
 const injectiveRoles = ['Ninja', 'Warrior', 'Knight', 'Ronin', 'Leader'];
 
@@ -145,15 +172,6 @@ export default function TalentForm() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!cvFile) {
-      alert('CV is required');
-      return;
-    }
-    console.log('Form submitted:', formData);
-    setSubmitted(true);
-  };
 
   const resetForm = () => {
     setFormData({
@@ -213,7 +231,7 @@ export default function TalentForm() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.8 }}
             >
-              JOIN TALENT POOL
+              PEDRO WEB3 CV
             </motion.h1>
             <motion.div
               initial={{ opacity: 0, scaleX: 0 }}
@@ -249,11 +267,10 @@ export default function TalentForm() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-black/50 p-6 rounded-xl border border-white/10 max-w-4xl mx-auto"
+              className="bg-black/50 p-6 rounded-xl border border-white/10 max-w-[1500] mx-auto"
             >
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
-                  {/* Personal Information */}
                   <div className="space-y-4">
                     <h3 className="text-lg font-semibold flex items-center gap-2 text-gray-200">
                       <FaUserTie />
@@ -261,14 +278,14 @@ export default function TalentForm() {
                     </h3>
                     
                     <div>
-                      <label className="block text-sm text-gray-400 mb-1">Full Name*</label>
+                      <label className="block text-sm text-gray-400 mb-1">Web 3 Name*</label>
                       <input
                         type="text"
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full bg-gray-900 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                        className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-white"
                       />
                     </div>
                     
@@ -280,18 +297,18 @@ export default function TalentForm() {
                         value={formData.role}
                         onChange={handleChange}
                         required
-                        className="w-full bg-gray-900 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                        className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-white"
                       />
                     </div>
                     
                     <div>
-                      <label className="block text-sm text-gray-400 mb-1">Years of Experience*</label>
+                      <label className="block text-sm text-gray-400 mb-2">Years of Experience*</label>
                       <select
                         name="experience"
                         value={formData.experience}
                         onChange={handleChange}
                         required
-                        className="w-full bg-gray-900 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                        className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-white"
                       >
                         <option value="">Select years</option>
                         {experienceYears.map(year => (
@@ -301,13 +318,13 @@ export default function TalentForm() {
                     </div>
                     
                     <div>
-                      <label className="block text-sm text-gray-400 mb-1">Highest Education*</label>
+                      <label className="block text-sm text-gray-400 mb-2">Highest Education*</label>
                       <select
                         name="education"
                         value={formData.education}
                         onChange={handleChange}
                         required
-                        className="w-full bg-gray-900 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                        className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-white"
                       >
                         <option value="">Select education level</option>
                         {educationLevels.map(level => (
@@ -317,13 +334,13 @@ export default function TalentForm() {
                     </div>
                     
                     <div>
-                      <label className="block text-sm text-gray-400 mb-1">Location*</label>
+                      <label className="block text-sm text-gray-400 mb-2">Location*</label>
                       <select
                         name="location"
                         value={formData.location}
                         onChange={handleChange}
                         required
-                        className="w-full bg-gray-900 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                        className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-white"
                       >
                         <option value="">Select country</option>
                         {countries.map(country => (
@@ -333,24 +350,26 @@ export default function TalentForm() {
                     </div>
                     
                     <div>
-                      <label className="block text-sm text-gray-400 mb-1">Profile Picture URL</label>
+                      <label className="block text-sm text-gray-400 mb-1">Profile Picture URL*</label>
                       <input
                         type="url"
                         name="profilePicture"
                         value={formData.profilePicture}
                         onChange={handleChange}
-                        placeholder="https://example.com/your-photo.jpg"
-                        className="w-full bg-gray-900 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                        required
+                        placeholder="https://imagekit.io/tools/image-to-url/"
+                        className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-white"
                       />
                     </div>
                     
                     <div>
-                      <label className="block text-sm text-gray-400 mb-1">Your Role in Injective</label>
+                      <label className="block text-sm text-gray-400 mb-1">Your Role in Injective*</label>
                       <select
                         name="injectiveRole"
                         value={formData.injectiveRole}
                         onChange={handleChange}
-                        className="w-full bg-gray-900 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                        required
+                        className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-white"
                       >
                         <option value="">Select your role</option>
                         {injectiveRoles.map(role => (
@@ -360,7 +379,6 @@ export default function TalentForm() {
                     </div>
                   </div>
                   
-                  {/* Contact Information */}
                   <div className="space-y-4">
                     <h3 className="text-lg font-semibold flex items-center gap-2 text-gray-200">
                       <FaGlobe />
@@ -374,7 +392,7 @@ export default function TalentForm() {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        className="w-full bg-gray-900 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                        className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-white"
                       />
                     </div>
                     
@@ -385,50 +403,41 @@ export default function TalentForm() {
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full bg-gray-900 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                        className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-white"
                       />
                     </div>
                     
                     <div>
                       <label className="block text-sm text-gray-400 mb-1">LinkedIn</label>
-                      <div className="flex items-center">
-                        <span className="bg-gray-700 border border-r-0 border-gray-600 rounded-l-md px-3 py-3">linkedin.com/in/</span>
-                        <input
-                          type="text"
-                          name="linkedin"
-                          value={formData.linkedin}
-                          onChange={handleChange}
-                          className="flex-1 bg-gray-900 border border-gray-700 rounded-r-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-purple-500"
-                        />
-                      </div>
+                      <input
+                        type="text"
+                        name="linkedin"
+                        value={formData.linkedin}
+                        onChange={handleChange}
+                        className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-white"
+                      />
                     </div>
                     
                     <div>
                       <label className="block text-sm text-gray-400 mb-1">GitHub</label>
-                      <div className="flex items-center">
-                        <span className="bg-gray-700 border border-r-0 border-gray-600 rounded-l-md px-3 py-3">github.com/</span>
-                        <input
-                          type="text"
-                          name="github"
-                          value={formData.github}
-                          onChange={handleChange}
-                          className="flex-1 bg-gray-900 border border-gray-700 rounded-r-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-purple-500"
-                        />
-                      </div>
+                      <input
+                        type="text"
+                        name="github"
+                        value={formData.github}
+                        onChange={handleChange}
+                        className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-white"
+                      />
                     </div>
                     
                     <div>
                       <label className="block text-sm text-gray-400 mb-1">Telegram</label>
-                      <div className="flex items-center">
-                        <span className="bg-gray-700 border border-r-0 border-gray-600 rounded-l-md px-3 py-3">@</span>
-                        <input
-                          type="text"
-                          name="telegram"
-                          value={formData.telegram}
-                          onChange={handleChange}
-                          className="flex-1 bg-gray-900 border border-gray-700 rounded-r-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-purple-500"
-                        />
-                      </div>
+                      <input
+                        type="text"
+                        name="telegram"
+                        value={formData.telegram}
+                        onChange={handleChange}
+                        className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-white"
+                      />
                     </div>
                     
                     <div>
@@ -439,33 +448,25 @@ export default function TalentForm() {
                         value={formData.portfolio}
                         onChange={handleChange}
                         placeholder="https://yourportfolio.com"
-                        className="w-full bg-gray-900 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                        className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-white"
                       />
                     </div>
                     
                     <div>
-                      <label className="block text-sm text-gray-400 mb-1">CV (PDF only)*</label>
-                      <div className="flex items-center gap-2">
-                        <label className="flex-1 bg-gray-900 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-purple-500 cursor-pointer">
-                          <span className="flex items-center gap-2">
-                            <FaFilePdf className="text-red-500" />
-                            {cvFile ? cvFile.name : 'Choose file...'}
-                          </span>
-                          <input
-                            type="file"
-                            name="cv"
-                            onChange={handleFileChange}
-                            accept=".pdf"
-                            required
-                            className="hidden"
-                          />
-                        </label>
-                      </div>
+                      <label className="block text-sm text-gray-400 mb-1">CV (link)*</label>
+                      <input
+                        type="url"
+                        name="cv"
+                        value={formData.cv}
+                        onChange={handleChange}
+                        placeholder="https://docs.google.com/..."
+                        className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-white"
+                      />
                     </div>
                   </div>
                 </div>
                 
-                {/* Languages Section */}
+
                 <div>
                   <h3 className="text-lg font-semibold mb-3 flex items-center gap-2 text-gray-200">
                     <FaGlobe />
@@ -480,7 +481,7 @@ export default function TalentForm() {
                         onClick={() => handleLanguageToggle(language)}
                         className={`px-3 py-2 rounded-lg text-sm flex items-center gap-1 transition-colors ${
                           formData.languages.includes(language)
-                            ? 'bg-purple-600/50 border border-purple-500'
+                            ? 'bg-white border text-black'
                             : 'bg-gray-800/50 border border-gray-700 hover:bg-gray-700/50'
                         }`}
                       >
@@ -489,8 +490,7 @@ export default function TalentForm() {
                     ))}
                   </div>
                 </div>
-                
-                {/* Skills Section */}
+
                 <div>
                   <h3 className="text-lg font-semibold mb-3 flex items-center gap-2 text-gray-200">
                     <FaCode />
@@ -505,7 +505,7 @@ export default function TalentForm() {
                         onClick={() => handleSkillToggle(skill)}
                         className={`px-3 py-2 rounded-lg text-sm flex items-center gap-1 transition-colors ${
                           formData.skills.includes(skill)
-                            ? 'bg-purple-600/50 border border-purple-500'
+                            ? 'bg-white border text-black'
                             : 'bg-gray-800/50 border border-gray-700 hover:bg-gray-700/50'
                         }`}
                       >
@@ -516,7 +516,6 @@ export default function TalentForm() {
                   </div>
                 </div>
                 
-                {/* Bio Section */}
                 <div>
                   <h3 className="text-lg font-semibold mb-3 flex items-center gap-2 text-gray-200">
                     <FaUserTie />
@@ -528,12 +527,11 @@ export default function TalentForm() {
                     onChange={handleChange}
                     required
                     rows={5}
-                    className="w-full bg-gray-900 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                    className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-white"
                     placeholder="Tell us about yourself, your experience, and what you're looking for..."
                   />
                 </div>
                 
-                {/* Availability */}
                 <div className="flex items-center">
                   <input
                     type="checkbox"
@@ -541,20 +539,19 @@ export default function TalentForm() {
                     name="available"
                     checked={formData.available}
                     onChange={(e) => setFormData(prev => ({ ...prev, available: e.target.checked }))}
-                    className="h-5 w-5 rounded border-gray-600 bg-gray-700 text-purple-600 focus:ring-purple-500"
+                    className="h-5 w-5 rounded border-gray-600 bg-white text-purple-600 focus:ring-purple-500"
                   />
                   <label htmlFor="available" className="ml-2 text-gray-300">
                     Currently available for work
                   </label>
                 </div>
                 
-                {/* Submit Button */}
                 <div className="pt-4">
                   <motion.button
                     type="submit"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+                    className="w-full bg-white hover:bg-black text-black hover:text-white font-medium py-3 px-6 rounded-lg transition-colors"
                   >
                     Submit Profile
                   </motion.button>
