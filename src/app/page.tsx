@@ -148,7 +148,7 @@ export default function AltHomePage() {
             className="mb-16"
           >
             <h2 className="text-3xl md:text-5xl text-center font-bold tracking-tighter mb-6">
-              <span className="text-white bg-clip-text bg-gradient-to-r">NFT TREASURY</span>
+              <span className="text-white bg-clip-text bg-gradient-to-r">PEDRO NFT</span>
             </h2>
             <div className="h-px w-48 mx-auto bg-gradient-to-r from-transparent via-gray-500 to-transparent" />
           </motion.div>

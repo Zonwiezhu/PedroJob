@@ -166,7 +166,7 @@ const WalletAuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) 
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                INJECTIVE CAREERS
+                UPLOAD CV
               </motion.h1>
               <motion.div
                 initial={{ opacity: 0, scaleX: 0 }}
