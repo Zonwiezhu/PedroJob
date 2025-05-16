@@ -140,50 +140,6 @@ const talents: Talent[] = [
     blockchainExperience: ['DeFi', 'Security', 'Protocols'],
     projectType: ['Contract', 'Part-time'],
     workPreference: ['Remote']
-  },
-  {
-    id: '6',
-    name: 'Emma Watson',
-    role: 'Community Manager',
-    skills: ['Discord', 'Telegram', 'Social Media', 'Content Creation', 'Moderation', 'Growth Hacking'],
-    experience: '3 years',
-    education: 'BA Communications, UCLA',
-    location: 'London, UK',
-    bio: 'Experienced community builder with expertise in growing and engaging crypto communities across multiple platforms.',
-    telegram: '@emmacm',
-    linkedin: 'linkedin.com/in/emmawatson',
-    github: 'github.com/emmacm',
-    email: 'emma.w@example.com',
-    phone: '+44 20 555 6789',
-    portfolio: 'emmawatson.com',
-    available: true,
-    hourlyRate: '$50-$80',
-    timezone: 'GMT (UTC+0)',
-    blockchainExperience: ['DAOs', 'NFT', 'SocialFi'],
-    projectType: ['Full-time', 'Part-time'],
-    workPreference: ['Remote', 'Hybrid']
-  },
-  {
-    id: '7',
-    name: 'Liam Smith',
-    role: 'Blockchain Researcher',
-    skills: ['Tokenomics', 'Governance', 'Cryptoeconomics', 'Whitepapers', 'Technical Writing'],
-    experience: '5 years',
-    education: 'PhD Economics, Cambridge',
-    location: 'New York, USA',
-    bio: 'Blockchain researcher specializing in tokenomics design and governance mechanisms for decentralized protocols.',
-    telegram: '@liamresearch',
-    linkedin: 'linkedin.com/in/liamsmith',
-    github: 'github.com/liamresearch',
-    email: 'liam.s@example.com',
-    phone: '+1 212 555 1234',
-    portfolio: 'liamsmith.xyz',
-    available: false,
-    hourlyRate: '$100-$150',
-    timezone: 'EST (UTC-5)',
-    blockchainExperience: ['DeFi', 'DAOs', 'Protocol Design'],
-    projectType: ['Consulting', 'Part-time'],
-    workPreference: ['Remote']
   }
 ];
 
@@ -266,7 +222,6 @@ export default function TalentPool() {
     handleResize();
     window.addEventListener('resize', handleResize);
     
-    // Set initial selected talent if not set
     if (!selectedTalent && talents.length > 0) {
       setSelectedTalent(talents[0]);
     }
@@ -279,42 +234,34 @@ export default function TalentPool() {
   const timezones = Array.from(new Set(talents.map(talent => talent.timezone).filter(Boolean)));
 
   const filteredTalents = talents.filter(talent => {
-    // Search filter
     if (searchQuery && !talent.name.toLowerCase().includes(searchQuery.toLowerCase())) {
       return false;
     }
     
-    // Role filter
     if (filters.role !== 'All' && talent.role !== filters.role) return false;
     
-    // Skills filter
     if (filters.skills.length > 0 && !filters.skills.some(skill => talent.skills.includes(skill))) return false;
     
-    // Availability filter
     if (filters.availability !== 'All') {
       if (filters.availability === 'Available' && !talent.available) return false;
       if (filters.availability === 'Unavailable' && talent.available) return false;
     }
     
-    // Blockchain experience filter
     if (filters.blockchainExperience.length > 0 && talent.blockchainExperience && 
         !filters.blockchainExperience.some(exp => talent.blockchainExperience?.includes(exp))) {
       return false;
     }
     
-    // Project type filter
     if (filters.projectType.length > 0 && talent.projectType && 
         !filters.projectType.some(type => talent.projectType?.includes(type))) {
       return false;
     }
     
-    // Work preference filter
     if (filters.workPreference.length > 0 && talent.workPreference && 
         !filters.workPreference.some(pref => talent.workPreference?.includes(pref))) {
       return false;
     }
     
-    // Hourly rate filter
     if (filters.hourlyRate.length > 0 && talent.hourlyRate) {
       const rateMatch = filters.hourlyRate.some(range => {
         if (range === '<$50') return parseFloat(talent.hourlyRate!.replace('$', '').split('-')[0]) < 50;
@@ -330,7 +277,6 @@ export default function TalentPool() {
       if (!rateMatch) return false;
     }
     
-    // Experience filter
     if (filters.experience.length > 0 && talent.experience) {
       const expMatch = filters.experience.some(range => {
         const years = parseInt(talent.experience);
@@ -344,7 +290,6 @@ export default function TalentPool() {
       if (!expMatch) return false;
     }
     
-    // Timezone filter
     if (filters.timezone && talent.timezone !== filters.timezone) return false;
     
     return true;
@@ -431,7 +376,7 @@ export default function TalentPool() {
         <section className="flex items-center justify-center py-7 text-center relative overflow-hidden">
           <div className="px-6 max-w-4xl relative z-10">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-white">
-              TALENT POOL
+              TALENTED
             </h1>
             <div className="h-px w-full bg-gradient-to-r from-transparent via-white to-transparent" />
           </div>

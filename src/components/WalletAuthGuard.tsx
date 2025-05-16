@@ -166,7 +166,7 @@ const WalletAuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) 
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                UPLOAD CV
+                PEDRO X JOB
               </motion.h1>
               <motion.div
                 initial={{ opacity: 0, scaleX: 0 }}
@@ -271,7 +271,7 @@ const WalletAuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) 
                     <div className="w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
                   </div>
                   <div className="absolute right-0 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
-                    <span className="text-2xl">🚀</span>
+                    <span className="text-2xl">🦝</span>
                   </div>
                 </motion.div>
               </div>
@@ -303,7 +303,7 @@ const WalletAuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) 
                   <h3 className="text-xl font-bold mb-3 text-white">Simple Pricing</h3>
                   <p className="text-gray-300 text-sm">
                     <span className="block mb-1">• 1 $PEDRO for Pedro holders</span>
-                    <span className="block">• 25,000 $PEDRO for others</span>
+                    <span className="block">• 100,000 $PEDRO for others</span>
                   </p>
                 </div>
               </motion.div>
@@ -359,30 +359,38 @@ const WalletAuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) 
           <section className="relative py-6 overflow-hidden">
             <div className="scrolling-images-container w-full py-8">
               <div className="scrolling-images flex space-x-8">
-                {[...Array(6)].map((_, i) => (
+                {[...Array(24)].map((_, i) => (
                   <motion.div
-                    key={`company-${i+1}`}
+                    key={`pedro-${i+1}`}
                     className="flex-shrink-0"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: i * 0.05, duration: 0.5 }}
                   >
-                    <div className="rounded-lg bg-white/10 h-48 w-48 flex items-center justify-center">
-                      <span className="text-4xl">{['🏦','💻','🖥️','📊','🔗','⚙️'][i]}</span>
-                    </div>
+                    <Image
+                      src={`/Pedro${i+1}.png`}
+                      alt={`Pedro ${i+1}`}
+                      width={200}
+                      height={200}
+                      className="rounded-lg object-cover h-48 w-48"
+                    />
                   </motion.div>
                 ))}
-                {[...Array(6)].map((_, i) => (
+                {[...Array(24)].map((_, i) => (
                   <motion.div
-                    key={`company-dupe-${i+1}`}
+                    key={`pedro-dupe-${i+1}`}
                     className="flex-shrink-0"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: i * 0.05, duration: 0.5 }}
                   >
-                    <div className="rounded-lg bg-white/10 h-24 w-24 flex items-center justify-center">
-                      <span className="text-2xl">{['🏦','💻','🖥️','📊','🔗','⚙️'][i]}</span>
-                    </div>
+                    <Image
+                      src={`/Pedro${i+1}.png`}
+                      alt={`Pedro ${i+1}`}
+                      width={100}
+                      height={100}
+                      className="rounded-lg object-cover h-24 w-24"
+                    />
                   </motion.div>
                 ))}
               </div>
