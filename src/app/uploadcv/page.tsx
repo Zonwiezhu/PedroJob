@@ -2,10 +2,14 @@
 import { motion } from "framer-motion";
 import Head from "next/head";
 import Image from "next/image";
-import { JSX, useState } from 'react';
+import { JSX, useState, useEffect, useCallback } from 'react';
 import WalletAuthGuard from "@/components/WalletAuthGuard";
 import { useWalletAuth } from "@/components/WalletAuthGuard";
 import { FaUserTie, FaCode, FaGlobe, FaCheck } from "react-icons/fa";
+import { ChainId } from '@injectivelabs/ts-types';
+import { BaseAccount, BroadcastModeKeplr, ChainRestAuthApi, ChainRestTendermintApi, CosmosTxV1Beta1Tx, createTransaction, getTxRawFromTxRawOrDirectSignResponse, MsgSend, TxRaw } from '@injectivelabs/sdk-ts';
+import { BigNumberInBase, DEFAULT_BLOCK_TIMEOUT_HEIGHT, getStdFee } from '@injectivelabs/utils';
+import { TransactionException } from '@injectivelabs/exceptions';
 
 const skillIcons: Record<string, JSX.Element> = {
   'Smart Contracts': <span className="text-blue-400 font-bold">SC</span>,
@@ -94,7 +98,10 @@ const injectiveRoles = ['Ninja', 'Warrior', 'Knight', 'Ronin', 'Leader', 'Builde
 
 const experienceYears = ['<1', '1-2', '2-3', '3-5', '5-7', '7-10', '10+'];
 
+type PaymentState = 'idle' | 'processing' | 'success' | 'failed';
+
 export default function TalentForm() {
+  const { logout } = useWalletAuth();
   const [formData, setFormData] = useState({
     name: '',
     role: '',
@@ -121,6 +128,143 @@ export default function TalentForm() {
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isUploading, setIsUploading] = useState(false);
+  const [hasPaid, setHasPaid] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [paymentState, setPaymentState] = useState<PaymentState>('idle');
+  const [storedAddress, setStoredAddress] = useState<string>('None');
+  const [walletType, setStoredWallet] = useState<string>('None');
+  const [nft_hold, setNftHold] = useState<string>('None');
+  const [token_hold, setTokenHold] = useState<string>('None');
+
+  useEffect(() => {
+    const checkAddress = () => {
+      const currentAddress = localStorage.getItem("connectedWalletAddress");
+      const currentWalletType = localStorage.getItem("connectedWalletType");
+      const currentNFT_Hold = localStorage.getItem("nft_hold")
+      const currentToken_Hold = localStorage.getItem("token_hold")
+
+      if (currentAddress && currentAddress !== storedAddress) {
+        setStoredAddress(currentAddress);
+      }
+
+      if (currentWalletType && currentWalletType !== walletType) {
+        setStoredWallet(currentWalletType);
+      }
+
+      if (currentNFT_Hold && currentNFT_Hold !== nft_hold) {
+        setNftHold(currentNFT_Hold);
+      }
+
+      if (currentToken_Hold && currentToken_Hold !== token_hold) {
+        setTokenHold(currentToken_Hold);
+      }
+    };
+
+    const interval = setInterval(checkAddress, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const baseAmount = nft_hold ? "1" : "100000";
+
+  const handleLogout = useCallback(() => {
+    if (logout) {
+      logout();
+    }
+    window.location.href = '/nftgenerator';
+  }, [logout]);
+
+  const handlePayment = useCallback(async () => {
+    if (!storedAddress) return;
+
+    setPaymentState('processing');
+
+    try {
+      const wallet = walletType === 'leap' ? window.leap : window.keplr;
+      if (!wallet) {
+        throw new Error(`${walletType} extension not installed`);
+      }
+
+      const chainId = ChainId.Mainnet;
+      await wallet.enable(chainId);
+      const [account] = await wallet.getOfflineSigner(chainId).getAccounts();
+      const injectiveAddress = account.address;
+  
+      const restEndpoint = "https://sentry.lcd.injective.network:443";
+      const chainRestAuthApi = new ChainRestAuthApi(restEndpoint);
+      const accountDetailsResponse = await chainRestAuthApi.fetchAccount(injectiveAddress);
+      if (!accountDetailsResponse) {
+        throw new Error("Failed to fetch account details");
+      }
+      const baseAccount = BaseAccount.fromRestApi(accountDetailsResponse);
+  
+      const chainRestTendermintApi = new ChainRestTendermintApi(restEndpoint);
+      const latestBlock = await chainRestTendermintApi.fetchLatestBlock();
+      const latestHeight = latestBlock.header.height;
+      const timeoutHeight = new BigNumberInBase(latestHeight).plus(DEFAULT_BLOCK_TIMEOUT_HEIGHT);
+      
+      const msg = MsgSend.fromJSON({
+        amount: {
+          amount: new BigNumberInBase(baseAmount).times(new BigNumberInBase(10).pow(18)).toFixed(),
+          denom: "factory/inj14ejqjyq8um4p3xfqj74yld5waqljf88f9eneuk/inj1c6lxety9hqn9q4khwqvjcfa24c2qeqvvfsg4fm",
+        },
+        srcInjectiveAddress: storedAddress,
+        dstInjectiveAddress: "inj1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqe2hm49",
+      });
+
+      const pubKey = await wallet.getKey(chainId);
+      if (!pubKey || !pubKey.pubKey) {
+        throw new Error("Failed to retrieve public key from wallet");
+      }
+  
+      const { txRaw: finalTxRaw, signDoc } = createTransaction({
+        pubKey: Buffer.from(pubKey.pubKey).toString('base64'),
+        chainId,
+        fee: getStdFee(),
+        message: msg,
+        sequence: baseAccount.sequence,
+        timeoutHeight: timeoutHeight.toNumber(),
+        accountNumber: baseAccount.accountNumber,
+        memo: "Send to burn wallet",
+      });
+  
+      const offlineSigner = wallet.getOfflineSigner(chainId);
+      const directSignResponse = await offlineSigner.signDirect(injectiveAddress, signDoc);
+  
+      const txRawSigned = getTxRawFromTxRawOrDirectSignResponse(directSignResponse);
+  
+      const broadcastTx = async (chainId: string, txRaw: TxRaw) => {
+        const result = await wallet.sendTx(
+          chainId,
+          CosmosTxV1Beta1Tx.TxRaw.encode(txRaw).finish(),
+          BroadcastModeKeplr.Sync,
+        );
+  
+        if (!result || result.length === 0) {
+          throw new TransactionException(
+            new Error('Transaction failed to be broadcasted'),
+            { contextModule: 'Wallet' },
+          );
+        }
+  
+        return Buffer.from(result).toString('hex');
+      };
+  
+      const txHash = await broadcastTx(ChainId.Mainnet, txRawSigned);
+
+      if (txHash) {
+        setPaymentState('success');
+        setHasPaid(true);
+        setModalMessage("Payment successful! You can now submit your profile.");
+        setIsWarningModalOpen(true)
+      }
+    } catch (error) {
+      setPaymentState('failed');
+      setModalMessage("Payment failed. Please try again.");
+      setIsWarningModalOpen(true)
+    }
+  }, [storedAddress]);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -197,11 +341,16 @@ export default function TalentForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      setIsUploading(true);
-      setTimeout(() => {
-        setIsUploading(false);
-        setSubmitted(true);
-      }, 1500);
+      if (hasPaid) {
+        setIsUploading(true);
+        setTimeout(() => {
+          setIsUploading(false);
+          setSubmitted(true);
+        }, 1500);
+      } else {
+        setModalMessage(`Submitting your profile requires a payment of ${baseAmount} $PEDRO. Proceed to payment?`);
+        setIsPaymentModalOpen(true);
+      }
     }
   };
 
@@ -230,6 +379,7 @@ export default function TalentForm() {
     });
     setErrors({});
     setSubmitted(false);
+    setHasPaid(false);
   };
 
   return (
@@ -278,6 +428,72 @@ export default function TalentForm() {
           </section>
 
           <div className="relative z-10 container mx-auto px-4 pb-16 max-w-[1500]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 px-2">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.1 }}
+                className="bg-black/50 p-4 rounded-lg border border-white/10 flex flex-col items-center justify-center"
+              >
+                <div className="flex items-center justify-between w-full">
+                  <div className="text-center w-full">
+                    <h3 className="text-sm font-medium text-gray-400 mb-1">Wallet Address</h3>
+                    <p className="text-xl font-mono text-white truncate px-2" title={storedAddress || ''}>
+                      {storedAddress ? `${storedAddress.slice(0, 6)}...${storedAddress.slice(-4)}` : 'Not connected'}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.2 }}
+                className="bg-black/50 p-4 rounded-lg border border-white/10 flex flex-col items-center justify-center"
+              >
+                <div className="text-center">
+                  <h3 className="text-sm font-medium text-gray-400 mb-1">PEDRO Tokens</h3>
+                  <div className="flex items-center justify-center space-x-2">
+                    <p className="text-xl font-bold text-white">{token_hold.toLocaleString()}</p>
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.3 }}
+                className="bg-black/50 p-4 rounded-lg border border-white/10 flex flex-col items-center justify-center"
+              >
+                <div className="text-center">
+                  <h3 className="text-sm font-medium text-gray-400 mb-1">Pedro NFTs</h3>
+                  <div className="flex items-center justify-center space-x-2">
+                    <p className="text-xl font-bold text-white">{nft_hold}</p>
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.4 }}
+                className="bg-black/50 p-4 rounded-lg border border-white/10 flex flex-col items-center justify-center"
+              >
+                <div className="text-center w-full">
+                  <h3 className="text-sm font-medium text-gray-400 mb-2">Wallet Disconnect</h3>
+                  <button 
+                    onClick={handleLogout}
+                    className="flex items-center justify-center space-x-2 text-black bg-white hover:bg-black hover:text-white px-4 py-2 rounded-full transition-colors w-full mx-auto max-w-[180px]"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    <span className="text-sm font-medium">Disconnect</span>
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+
             {submitted ? (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -642,7 +858,7 @@ export default function TalentForm() {
                           Submitting...
                         </>
                       ) : (
-                        'Submit Profile'
+                        hasPaid ? 'Submit Profile' : 'Proceed to Payment'
                       )}
                     </motion.button>
                   </div>
@@ -650,6 +866,100 @@ export default function TalentForm() {
               </motion.div>
             )}
           </div>
+
+          {isPaymentModalOpen && (
+            <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                transition={{ type: "spring", damping: 25, stiffness: 400 }}
+                className="relative z-10 w-full max-w-md bg-gradient-to-br from-black to-gray-900 rounded-2xl overflow-hidden border border-white/10 shadow-xl"
+              >
+                <div className="p-6">
+                  <div className="flex justify-center mb-4">
+                    <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center">
+                      <span className="text-2xl">⚠️</span>
+                    </div>
+                  </div>
+                  
+                  <h3 className="text-xl font-bold text-center text-white mb-2">Notice</h3>
+                  <p className="text-gray-300 text-center mb-6">{modalMessage}</p>
+                  
+                  <div className="flex justify-center space-x-4">
+                    <button
+                      onClick={() => setIsPaymentModalOpen(false)}
+                      className="w-40 rounded-lg bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 transition-all duration-300"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={() => {
+                        setIsPaymentModalOpen(false);
+                        handlePayment();
+                      }}
+                      className="w-40 rounded-lg bg-white text-black hover:bg-gray-200 font-medium py-2 transition-all duration-300"
+                    >
+                      Proceed
+                    </button>
+                  </div>
+                </div>
+                
+                <motion.div 
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                  className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white to-transparent"
+                />
+              </motion.div>
+            </div>
+          )}
+
+          {isWarningModalOpen && (
+            <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
+              <div className="relative z-10 w-full max-w-md bg-gradient-to-br from-black to-gray-900 rounded-2xl overflow-hidden border border-white/10 shadow-xl">
+                <div className="p-6">
+                  {paymentState === 'processing' ? (
+                    <div className="flex justify-center mb-4">
+                      <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-purple-500"></div>
+                    </div>
+                  ) : (
+                    <div className="flex justify-center mb-4">
+                      <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center">
+                        {paymentState === 'success' ? '✅' : paymentState === 'failed' ? '❌' : '⚠️'}
+                      </div>
+                    </div>
+                  )}
+                  
+                  <h3 className="text-xl font-bold text-center text-white mb-2">
+                    {paymentState === 'processing' ? 'Processing Payment' : 
+                    paymentState === 'success' ? 'Payment Successful' :
+                    paymentState === 'failed' ? 'Payment Failed' : 'Notice'}
+                  </h3>
+                  
+                  <p className="text-gray-300 text-center mb-6">{modalMessage}</p>
+                  
+                  <div className="flex justify-center space-x-4">
+                    {paymentState !== 'processing' && (
+                      <button
+                        onClick={() => {
+                          setIsWarningModalOpen(false);
+                          if (paymentState === 'success') {
+                          }
+                        }}
+                        className={`w-full rounded-lg ${
+                          paymentState === 'success' 
+                            ? 'bg-green-600 hover:bg-green-700' 
+                            : 'bg-white hover:bg-gray-200 text-black'
+                        } font-medium py-2 transition-all duration-300`}
+                      >
+                        {paymentState === 'success' ? 'Continue' : 'Try Again'}
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </>
     </WalletAuthGuard>
